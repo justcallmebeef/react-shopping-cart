@@ -7,16 +7,16 @@ class App extends Component {
   constructor() { 
     super()
     this.state = {
-      copyright: '&copy',
       year: '2016'
     }
   }
+
   render() {
     return (
       <div class='app'>
         <CartHeader />
         <CartItems />
-        <CartFooter />
+        <CartFooter year={this.state.year} />
       </div>
     )
 }
