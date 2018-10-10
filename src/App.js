@@ -28,19 +28,37 @@ class App extends Component {
     }
   }
 
+  productSelect() {
+    console.log('there is change in the air')
+    console.log(this.state.products.name)
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    console.log(this.refs.quantity.value)
+    this.setState({
+      products: this.state.cartItemsList.concat('something work please')
+    })
+  }
+
   render() {
     return (
       <div className='app'>
         <CartHeader />
         <CartItems cartItemsList={this.state.cartItemsList}/>
-        <form>
-        <p>Quantity</p>
-        <input type="number" min="0" quantity="quantity"></input>
-        <p>Products</p>
-        <select id="myList">
-          <option value="" disabled selected>Select your option</option>
-          <AddItem products={this.state.products} />
-        </select>
+        <form onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label htmlFor="exampleFormControlInput1">Quantity</label>
+            <input type="number" ref="quantity" min="0" quantity="quantity" className="form-control" id="exampleFormControlInput1"></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleFormControlSelect1">Products</label>
+            <select className="form-control" id="exampleFormControlSelect1" onChange={this.productSelect}>
+              <option value="" disabled selected >Select your option</option>
+              <AddItem products={this.state.products} />
+            </select>
+          </div>
+          <button id="button" type="submit" className="btn btn-primary">Submit</button>
         </form>
         <CartFooter year={this.state.year} />
       </div>
