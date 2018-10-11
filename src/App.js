@@ -48,7 +48,7 @@ class App extends Component {
       <div className='app'>
         <CartHeader />
         <CartItems cartItemsList={this.state.cartItemsList}/>
-        <h1>Total: ${this.state.total/100}</h1>
+        <h3>Total: ${this.state.total/100}</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">Quantity</label>
