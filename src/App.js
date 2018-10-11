@@ -28,16 +28,21 @@ class App extends Component {
     }
   }
 
-  productSelect() {
-    console.log('there is change in the air')
-    console.log(this.state.products.name)
+  productSelect = (e) => {
+      return e.target.innerText
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    console.log(this.refs.quantity.value)
+    var newItem = {
+      id: this.state.cartItemsList.length + 1,
+      product: (this.refs.productItem.value.split(' ¢')[0]),
+      price: (this.refs.productItem.value.split(' ¢')[1]),
+      quantity: this.refs.quantity.value
+    }
+    console.log(newItem)
     this.setState({
-      products: this.state.cartItemsList.concat('something work please')
+      cartItemsList: [...this.state.cartItemsList, newItem]
     })
   }
 
@@ -53,7 +58,7 @@ class App extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Products</label>
-            <select className="form-control" id="exampleFormControlSelect1" onChange={this.productSelect}>
+            <select ref="productItem" className="form-control" id="exampleFormControlSelect1" onChange={this.productSelect}>
               <option value="" disabled selected >Select your option</option>
               <AddItem products={this.state.products} />
             </select>

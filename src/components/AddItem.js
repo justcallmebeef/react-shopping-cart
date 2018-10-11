@@ -3,7 +3,7 @@ import React from 'react'
 const AddItem = (props) => {
     return props.products.map(productList => {
         return (
-            <option value="" key={productList.name}>{productList.name}</option>
+            <option key={productList.name}>{productList.name} &cent;{productList.priceInCents}</option>
         )
     })
     
