@@ -6,7 +6,7 @@ const CartItemComponent = (props) => {
         <div className="list-group-item" key={itemThings.product.id}>
             <div className="row">
                 <div className="col-md-8">{itemThings.product.name}</div>
-                <div className="col-md-2">&cent; {itemThings.product.priceInCents}</div>
+                <div className="col-md-2">$ {(itemThings.product.priceInCents)/100}</div>
                 <div className="col-md-2">{itemThings.quantity}</div>
             </div>
       </div>

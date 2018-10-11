@@ -9,11 +9,7 @@ class App extends Component {
     super()
     this.state = {
       year: '2016',
-      cartItemsList: [
-        { id: 1, product: { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 }, quantity: 1 },
-        { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
-        { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
-      ], 
+      cartItemsList: [], 
       products: [
         { id: 40, name: 'Mediocre Iron Watch', priceInCents: 399 },
         { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 },
@@ -29,31 +25,22 @@ class App extends Component {
     }
   }
 
-  // productSelect = (e) => {
-  //   console.log(e.target.innerText)
-  //     return e.target.innerText
-  // }
-
   onSubmit = (e) => {
     e.preventDefault()
     let cartItems = this.state.cartItemsList
     var newItem = {
       id: this.state.cartItemsList.length + 1,
-      product: {name: this.refs.productItem.value.split(' ¢')[0],
-      priceInCents: this.refs.productItem.value.split(' ¢')[1],},
+      product: {name: this.refs.productItem.value.split(' $')[0],
+      priceInCents: Number(this.refs.productItem.value.split(' $')[1])*100,},
       quantity: this.refs.quantity.value
     }
-    this.setState({
-      cartItemsList: [...cartItems, newItem]
-    })
+    const newCartList = [...cartItems, newItem]
     let total = this.state.total 
-    for (let i = 0; i < cartItems.length; i++) {
-      console.log(cartItems[0].product.priceInCents)
-      total += (cartItems[i].product.priceInCents * cartItems[i].quantity)
-    }
+      total += (newCartList[newCartList.length-1].product.priceInCents * newCartList[newCartList.length-1].quantity)
     this.setState({
-      total: total 
-    })
+      cartItemsList: newCartList,
+      total: total
+    })  
   }
 
   render() {
@@ -61,7 +48,7 @@ class App extends Component {
       <div className='app'>
         <CartHeader />
         <CartItems cartItemsList={this.state.cartItemsList}/>
-        <h1>Total: {this.state.total}</h1>
+        <h1>Total: ${this.state.total/100}</h1>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">Quantity</label>
