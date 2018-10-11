@@ -24,25 +24,35 @@ class App extends Component {
         { id: 46, name: 'Intelligent Leather Clock', priceInCents: 2999 },
         { id: 47, name: 'Ergonomic Bronze Lamp', priceInCents: 40000 },
         { id: 48, name: 'Awesome Leather Shoes', priceInCents: 3990 },
-      ]
+      ],
+      total: 0,
     }
   }
 
-  productSelect = (e) => {
-      return e.target.innerText
-  }
+  // productSelect = (e) => {
+  //   console.log(e.target.innerText)
+  //     return e.target.innerText
+  // }
 
   onSubmit = (e) => {
     e.preventDefault()
+    let cartItems = this.state.cartItemsList
     var newItem = {
       id: this.state.cartItemsList.length + 1,
-      product: (this.refs.productItem.value.split(' ¢')[0]),
-      price: (this.refs.productItem.value.split(' ¢')[1]),
+      product: {name: this.refs.productItem.value.split(' ¢')[0],
+      priceInCents: this.refs.productItem.value.split(' ¢')[1],},
       quantity: this.refs.quantity.value
     }
-    console.log(newItem)
     this.setState({
-      cartItemsList: [...this.state.cartItemsList, newItem]
+      cartItemsList: [...cartItems, newItem]
+    })
+    let total = this.state.total 
+    for (let i = 0; i < cartItems.length; i++) {
+      console.log(cartItems[0].product.priceInCents)
+      total += (cartItems[i].product.priceInCents * cartItems[i].quantity)
+    }
+    this.setState({
+      total: total 
     })
   }
 
@@ -51,6 +61,7 @@ class App extends Component {
       <div className='app'>
         <CartHeader />
         <CartItems cartItemsList={this.state.cartItemsList}/>
+        <h1>Total: {this.state.total}</h1>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">Quantity</label>
