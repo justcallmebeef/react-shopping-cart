@@ -1,5 +1,5 @@
 import React from 'react';
-import CartItemComponent from './CartItemComponent'
+import CartItem from './CartItem'
 
 const CartItems = (props) => {
 
@@ -14,7 +14,7 @@ const CartItems = (props) => {
                         <div className="col-md-2"><b>Quantity</b></div>
                     </div>
                 </div>
-                <CartItemComponent cartItemsList={props.cartItemsList} />
+                <CartItem cartItemsList={props.cartItemsList} />
             </div>
         </div>
     )

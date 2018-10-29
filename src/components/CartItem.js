@@ -1,7 +1,7 @@
 import React from 'react';
 
-const CartItemComponent = (props) => {
-        var items = props.cartItemsList.map(itemThings => {
+const CartItem = (props) => {
+    var items = props.cartItemsList.map(itemThings => {
     return (
         <div className="list-group-item" key={itemThings.id}>
             <div className="row">
@@ -12,11 +12,12 @@ const CartItemComponent = (props) => {
       </div>
     )
 })
-return (
-    <div className="collection-item">
-        {items}
-    </div>
-)
+
+    return (
+        <div className="collection-item">
+            {items}
+        </div>
+    )
 }
 
-export default CartItemComponent;
+export default CartItem;
