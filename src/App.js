@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CartHeader from './components/CartHeader.js';
 import CartFooter from './components/CartFooter.js';
 import CartItems from './components/CartItems.js';
-import AddItem from './components/AddItem.js'
+import Form from './components/Form'
 
 class App extends Component {
   constructor() { 
@@ -22,21 +22,37 @@ class App extends Component {
         { id: 48, name: 'Awesome Leather Shoes', priceInCents: 3990 },
       ],
       total: 0,
+      quantity: 0,
     }
+  }
+
+  handleChangeQuantity = (event) => {
+    this.setState({
+      quantity: event.target.value
+    })
+  }
+
+  productSelect = (event) => {
+    this.setState({
+      selectedProduct: event.target.value
+    })
   }
 
   onSubmit = (e) => {
     e.preventDefault()
+    let newPrice = this.state.products.filter(item => {
+      return item.name === this.state.selectedProduct
+    })
     let cartItems = this.state.cartItemsList
     var newItem = {
       id: this.state.cartItemsList.length + 1,
-      product: {name: this.refs.productItem.value.split(' $')[0],
-      priceInCents: Number(this.refs.productItem.value.split(' $')[1])*100,},
-      quantity: this.refs.quantity.value
+      name: newPrice[0].name,
+      priceInCents: newPrice[0].priceInCents,
+      quantity: this.state.quantity
     }
     const newCartList = [...cartItems, newItem]
     let total = this.state.total 
-      total += (newCartList[newCartList.length-1].product.priceInCents * newCartList[newCartList.length-1].quantity)
+      total += (newCartList[newCartList.length-1].priceInCents * newCartList[newCartList.length-1].quantity)
     this.setState({
       cartItemsList: newCartList,
       total: total
@@ -49,20 +65,7 @@ class App extends Component {
         <CartHeader />
         <CartItems cartItemsList={this.state.cartItemsList}/>
         <h3>Total: ${this.state.total/100}</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label htmlFor="exampleFormControlInput1">Quantity</label>
-            <input type="number" ref="quantity" min="0" quantity="quantity" className="form-control" id="exampleFormControlInput1"></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1">Products</label>
-            <select ref="productItem" className="form-control" id="exampleFormControlSelect1" onChange={this.productSelect}>
-              <option value="" disabled selected >Select your option</option>
-              <AddItem products={this.state.products} />
-            </select>
-          </div>
-          <button id="button" type="submit" className="btn btn-primary">Submit</button>
-        </form>
+        <Form productSelect={this.productSelect} handleChangeQuantity={this.handleChangeQuantity} products={this.state.products} onSubmit={this.onSubmit}/> 
         <CartFooter year={this.state.year} />
       </div>
     )
